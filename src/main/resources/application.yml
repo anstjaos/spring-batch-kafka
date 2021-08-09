@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: release
+  cloud:
+    zookeeper:
+      connect-string: test
+
+kafka:
+  group-id: library_kafka_resolver
+  max-fetch-size: 786432
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+kafka:
+  group-id: library_test
+  max-fetch-size: 3145728
