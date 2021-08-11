@@ -2,11 +2,9 @@ spring:
   config:
     activate:
       on-profile: release
-  cloud:
-    zookeeper:
-      connect-string: test
 
 kafka:
+  bootstrap-servers: 10.161.135.47:9093,10.161.135.48:9093,10.161.135.49:9093
   group-id: library_kafka_resolver
   max-fetch-size: 786432
 
@@ -18,5 +16,6 @@ spring:
       on-profile: local
 
 kafka:
+  bootstrap-servers: 10.161.135.47,10.161.135.48,10.161.135.49
   group-id: library_test
   max-fetch-size: 3145728
