@@ -1,4 +1,4 @@
-package com.example.kafkabatch.model.message;
+package com.example.kafkabatch.model.dto.message;
 
 import lombok.Getter;
 import lombok.Setter;
