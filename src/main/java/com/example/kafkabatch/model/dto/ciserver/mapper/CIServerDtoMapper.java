@@ -4,6 +4,9 @@ import com.example.kafkabatch.model.dto.ciserver.CIServerDto;
 import com.example.kafkabatch.model.entity.CIServerEntity;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CIServerDtoMapper {
 
     public static CIServerDto convert(CIServerEntity ciServerEntity) {
@@ -19,5 +22,9 @@ public class CIServerDtoMapper {
                 .isPrivateIp(isIpExist && !ciServerEntity.getIsPublicIp())
                 .isPrivateVip(isVipExist && !ciServerEntity.getIsPublicVip())
                 .build();
+    }
+
+    public static List<CIServerDto> convert(List<CIServerEntity> ciServerEntities) {
+        return ciServerEntities.stream().map(CIServerDtoMapper::convert).collect(Collectors.toList());
     }
 }
