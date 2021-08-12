@@ -1,18 +1,18 @@
-package com.example.kafkabatch.model.dto.solr.mapper;
+package com.example.kafkabatch.model.entity.mapper;
 
 import com.example.kafkabatch.model.dto.ciserver.CIServerDto;
 import com.example.kafkabatch.model.dto.message.SISMessageDto;
-import com.example.kafkabatch.model.dto.solr.SolrInputDocument;
-import com.example.kafkabatch.model.dto.solr.SolrInputHeader;
-import com.example.kafkabatch.model.dto.solr.SolrInputResult;
+import com.example.kafkabatch.model.entity.LibraryDocument;
+import com.example.kafkabatch.model.entity.LibraryDocumentHeader;
+import com.example.kafkabatch.model.entity.LibraryDocumentResult;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SolrInputDocumentMapper {
+public class LibraryDocumentMapper {
 
-    public static SolrInputDocument convert(SISMessageDto sisMessageDto, CIServerDto ciServerDto) {
+    public static LibraryDocument convert(SISMessageDto sisMessageDto, CIServerDto ciServerDto) {
         String topic = "SIS";
         StringBuilder id = new StringBuilder();
         id.append(topic)
@@ -21,15 +21,15 @@ public class SolrInputDocumentMapper {
                 .append(sisMessageDto.getResult().getFileName())
                 .append(sisMessageDto.getResult().getAbsolutePath());
 
-        SolrInputHeader solrInputHeader = SolrInputHeaderMapper.convert(sisMessageDto.getHeader(), ciServerDto);
-        SolrInputResult solrInputResult = SolrInputResultMapper.convert(sisMessageDto.getResult());
+        LibraryDocumentHeader libraryDocumentHeader = LibraryDocumentHeaderMapper.convert(sisMessageDto.getHeader(), ciServerDto);
+        LibraryDocumentResult libraryDocumentResult = LibraryDocumentResultMapper.convert(sisMessageDto.getResult());
 
-        return SolrInputDocument.builder()
+        return LibraryDocument.builder()
                 .id(getMD5HashString(id.toString()))
                 .topic(topic)
                 .timestamp(sisMessageDto.getHeader().getTimestamp().toString() + "000")
-                .header(solrInputHeader)
-                .result(solrInputResult)
+                .header(libraryDocumentHeader)
+                .result(libraryDocumentResult)
                 .build();
     }
 
