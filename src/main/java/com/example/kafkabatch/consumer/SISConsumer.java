@@ -29,7 +29,7 @@ public class SISConsumer {
         this.libraryDocumentRepository = libraryDocumentRepository;
     }
 
-    @KafkaListener(topics = "SIS")
+    @KafkaListener(topics = "SIS", containerFactory = "kafkaListenerContainerFactory")
     public void sisConsume(List<SISMessageDto> sisMessageDtoList) {
         List<CIServerEntity> ciServerList = ciServerRepository.findAll();
         List<CIServerDto> ciServerDtoList = CIServerDtoMapper.convert(ciServerList);
