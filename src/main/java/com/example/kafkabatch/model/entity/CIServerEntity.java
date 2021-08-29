@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CIServerEntity {
 
     @Id
+    private String id;
+
     private String hostname;
 
     private String ip;

@@ -11,13 +11,14 @@ import com.example.kafkabatch.repository.solr.LibraryDocumentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @Slf4j
 public class SISConsumer {
 
@@ -29,7 +30,7 @@ public class SISConsumer {
         this.libraryDocumentRepository = libraryDocumentRepository;
     }
 
-    @KafkaListener(topics = "SIS", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "SIS")
     public void sisConsume(List<SISMessageDto> sisMessageDtoList) {
         List<CIServerEntity> ciServerList = ciServerRepository.findAll();
         List<CIServerDto> ciServerDtoList = CIServerDtoMapper.convert(ciServerList);
