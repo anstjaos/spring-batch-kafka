@@ -7,7 +7,7 @@ import org.springframework.data.solr.core.mapping.ChildDocument;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
 @Getter
-@SolrDocument
+@SolrDocument(collection = "library_document")
 public class LibraryDocumentResult {
 
     @Field
