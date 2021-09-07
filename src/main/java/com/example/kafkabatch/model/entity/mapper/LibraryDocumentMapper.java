@@ -1,36 +1,50 @@
 package com.example.kafkabatch.model.entity.mapper;
 
 import com.example.kafkabatch.model.dto.ciserver.CIServerDto;
+import com.example.kafkabatch.model.dto.message.MessageHeader;
 import com.example.kafkabatch.model.dto.message.SISMessageDto;
 import com.example.kafkabatch.model.entity.LibraryDocument;
-import com.example.kafkabatch.model.entity.LibraryDocumentHeader;
 import com.example.kafkabatch.model.entity.LibraryDocumentResult;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 public class LibraryDocumentMapper {
 
     public static LibraryDocument convert(SISMessageDto sisMessageDto, CIServerDto ciServerDto) {
         String topic = "SIS";
         StringBuilder id = new StringBuilder();
+        MessageHeader messageHeader = sisMessageDto.getHeader();
         id.append(topic)
-                .append(sisMessageDto.getHeader().getHostname())
-                .append(sisMessageDto.getHeader().getScanPluginName())
+                .append(messageHeader.getHostname())
+                .append(messageHeader.getScanPluginName())
                 .append(sisMessageDto.getResult().getFileName())
                 .append(sisMessageDto.getResult().getAbsolutePath());
 
-        LibraryDocumentHeader libraryDocumentHeader = LibraryDocumentHeaderMapper.convert(sisMessageDto.getHeader(), ciServerDto);
         LibraryDocumentResult libraryDocumentResult = LibraryDocumentResultMapper.convert(sisMessageDto.getResult());
 
-        return LibraryDocument.builder()
+        LibraryDocument.LibraryDocumentBuilder builder = LibraryDocument.builder()
                 .id(getMD5HashString(id.toString()))
                 .topic(topic)
-                .timestamp(sisMessageDto.getHeader().getTimestamp().toString() + "000")
-                .header(libraryDocumentHeader)
-                .result(libraryDocumentResult)
-                .build();
+                .timestamp(messageHeader.getTimestamp().toString() + "000")
+                .hostname(messageHeader.getHostname())
+                .jobID(messageHeader.getId())
+                .scanPluginVersion(messageHeader.getScanPluginVersion())
+                .scanPluginName(messageHeader.getScanPluginName())
+                .result(libraryDocumentResult);
+
+        Optional.ofNullable(ciServerDto)
+                .ifPresent(ciServer -> builder
+                        .ip(ciServer.getIp())
+                        .vip(ciServerDto.getVip())
+                        .isPublicIp(ciServerDto.getIsPublicIp())
+                        .isPublicVip(ciServerDto.getIsPublicVip())
+                        .isPrivateIp(ciServerDto.getIsPrivateIp())
+                        .isPrivateVip(ciServerDto.getIsPrivateVip()));
+
+        return builder.build();
     }
 
     private static String getMD5HashString(String input) {
