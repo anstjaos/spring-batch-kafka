@@ -2,6 +2,12 @@ spring:
   config:
     activate:
       on-profile: release
+  data:
+    mongodb:
+      uri: mongodb://tungsten:sis#0225@10.161.142.40:27100,10.161.142.108:27100,10.161.142.109:27100/tungsten?replicaSet=sis_rep001&authSource=tungsten
+    solr:
+      host: http://10.161.135.48:8983/solr/
+
 
 kafka:
   bootstrap-servers: 10.161.135.47:9093,10.161.135.48:9093,10.161.135.49:9093
@@ -14,8 +20,13 @@ spring:
   config:
     activate:
       on-profile: local
+  data:
+    mongodb:
+      uri: mongodb://tungsten:tungsten@10.161.64.36:27100,10.161.64.37:27100,10.161.64.38:27100/tungsten-alpha
+    solr:
+      host: http://10.161.135.48:8983/solr/
 
 kafka:
-  bootstrap-servers: 10.161.135.47,10.161.135.48,10.161.135.49
+  bootstrap-servers: 10.161.135.47:9093,10.161.135.48:9093,10.161.135.49:9093
   group-id: library_test
   max-fetch-size: 3145728

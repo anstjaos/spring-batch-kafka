@@ -2,9 +2,9 @@ package com.example.kafkabatch.model.entity.mapper;
 
 import com.example.kafkabatch.model.dto.ciserver.CIServerDto;
 import com.example.kafkabatch.model.dto.message.MessageHeader;
+import com.example.kafkabatch.model.dto.message.MessageResult;
 import com.example.kafkabatch.model.dto.message.SISMessageDto;
 import com.example.kafkabatch.model.entity.LibraryDocument;
-import com.example.kafkabatch.model.entity.LibraryDocumentResult;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -15,15 +15,15 @@ public class LibraryDocumentMapper {
 
     public static LibraryDocument convert(SISMessageDto sisMessageDto, CIServerDto ciServerDto) {
         String topic = "SIS";
+
         StringBuilder id = new StringBuilder();
         MessageHeader messageHeader = sisMessageDto.getHeader();
+        MessageResult messageResult = sisMessageDto.getResult();
         id.append(topic)
                 .append(messageHeader.getHostname())
                 .append(messageHeader.getScanPluginName())
-                .append(sisMessageDto.getResult().getFileName())
-                .append(sisMessageDto.getResult().getAbsolutePath());
-
-        LibraryDocumentResult libraryDocumentResult = LibraryDocumentResultMapper.convert(sisMessageDto.getResult());
+                .append(messageResult.getFileName())
+                .append(messageResult.getAbsolutePath());
 
         LibraryDocument.LibraryDocumentBuilder builder = LibraryDocument.builder()
                 .id(getMD5HashString(id.toString()))
@@ -33,7 +33,9 @@ public class LibraryDocumentMapper {
                 .jobID(messageHeader.getId())
                 .scanPluginVersion(messageHeader.getScanPluginVersion())
                 .scanPluginName(messageHeader.getScanPluginName())
-                .result(libraryDocumentResult);
+                .absolutePath(messageResult.getAbsolutePath())
+                .filename(messageResult.getFileName())
+                .version(messageResult.getData().getVersion());
 
         Optional.ofNullable(ciServerDto)
                 .ifPresent(ciServer -> builder

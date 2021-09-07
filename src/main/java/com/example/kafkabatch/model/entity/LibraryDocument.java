@@ -51,9 +51,14 @@ public class LibraryDocument {
     @Field("header.isPrivateVip")
     private Boolean isPrivateVip;
 
+    @Field("header.absolutePath")
+    private String absolutePath;
 
-    @ChildDocument
-    private LibraryDocumentResult result;
+    @Field("header.filename")
+    private String filename;
+
+    @Field("header.data.version")
+    private String version;
 
     public LibraryDocument() {}
 
@@ -71,7 +76,9 @@ public class LibraryDocument {
                            Boolean isPublicVip,
                            Boolean isPrivateIp,
                            Boolean isPrivateVip,
-                           LibraryDocumentResult result) {
+                           String absolutePath,
+                           String filename,
+                           String version) {
         this.id = id;
         this.topic = topic;
         this.timestamp = timestamp;
@@ -85,6 +92,8 @@ public class LibraryDocument {
         this.isPublicVip = isPublicVip;
         this.isPrivateIp = isPrivateIp;
         this.isPrivateVip = isPrivateVip;
-        this.result = result;
+        this.absolutePath = absolutePath;
+        this.filename = filename;
+        this.version = version;
     }
 }
