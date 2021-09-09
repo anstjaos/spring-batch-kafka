@@ -10,7 +10,6 @@ import com.example.kafkabatch.repository.CIServerRepository;
 import com.example.kafkabatch.repository.solr.LibraryDocumentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class SISConsumer {
 
         List<LibraryDocument> libraryDocumentList = sisMessageDtoList.stream()
                 .map(sisMessageDto -> LibraryDocumentMapper.convert(sisMessageDto, mapHostNameCIServerDto.get(sisMessageDto.getHeader().getHostname())))
-                .filter(libraryDocument -> libraryDocument.getResult().getFilename() != null)
+                .filter(libraryDocument -> libraryDocument.getFilename() != null)
                 .collect(Collectors.toList());
 
         log.debug("[PROCESS CHECKER] number of documents: " + libraryDocumentList.size());
