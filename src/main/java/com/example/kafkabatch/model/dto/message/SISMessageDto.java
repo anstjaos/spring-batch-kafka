@@ -11,6 +11,8 @@ public class SISMessageDto {
 
     private MessageResult result;
 
+    public SISMessageDto() {}
+
     public SISMessageDto(MessageHeader header, MessageResult result) {
         this.header = header;
         this.result = result;

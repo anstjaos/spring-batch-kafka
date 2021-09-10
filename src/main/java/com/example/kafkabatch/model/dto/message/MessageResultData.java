@@ -13,6 +13,8 @@ public class MessageResultData {
 
     private String hash;
 
+    public MessageResultData() {}
+
     public MessageResultData(String timestamp, String version, String hash) {
         this.timestamp = timestamp;
         this.version = version;

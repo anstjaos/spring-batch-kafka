@@ -13,6 +13,8 @@ public class MessageResult {
 
     private String fileName;
 
+    public MessageResult() {}
+
     public MessageResult(String absolutePath, MessageResultData data, String fileName) {
         this.absolutePath = absolutePath;
         this.data = data;

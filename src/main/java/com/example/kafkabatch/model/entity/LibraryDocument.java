@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.solr.core.mapping.ChildDocument;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
 @Getter
@@ -24,7 +23,7 @@ public class LibraryDocument {
     @Field("header.hostname")
     private String hostname;
 
-    @Field("header.id")
+    @Field("header.jobID")
     private String jobID;
 
     @Field("header.scanPluginVersion")
@@ -51,13 +50,13 @@ public class LibraryDocument {
     @Field("header.isPrivateVip")
     private Boolean isPrivateVip;
 
-    @Field("header.absolutePath")
+    @Field("result.absolutePath")
     private String absolutePath;
 
-    @Field("header.filename")
+    @Field("result.filename")
     private String filename;
 
-    @Field("header.data.version")
+    @Field("result.data.version")
     private String version;
 
     public LibraryDocument() {}

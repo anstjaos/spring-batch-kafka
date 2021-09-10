@@ -19,6 +19,8 @@ public class MessageHeader {
 
     private Long timestamp;
 
+    public MessageHeader() {}
+
     public MessageHeader(String hostname, String id, String scanPluginVersion, String scanPluginTopic, String scanPluginName, Long timestamp) {
         this.hostname = hostname;
         this.id = id;

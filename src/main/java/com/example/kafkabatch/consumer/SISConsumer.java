@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -34,8 +35,8 @@ public class SISConsumer {
         List<CIServerEntity> ciServerList = ciServerRepository.findAll();
         List<CIServerDto> ciServerDtoList = CIServerDtoMapper.convert(ciServerList);
 
-        Map<String, CIServerDto> mapHostNameCIServerDto = ciServerDtoList.stream()
-                .collect(Collectors.toMap(CIServerDto::getHostname, Function.identity()));
+        Map<String, CIServerDto> mapHostNameCIServerDto = new HashMap<>();
+        ciServerDtoList.forEach(ciServerDto -> mapHostNameCIServerDto.put(ciServerDto.getHostname(), ciServerDto));
 
         List<LibraryDocument> libraryDocumentList = sisMessageDtoList.stream()
                 .map(sisMessageDto -> LibraryDocumentMapper.convert(sisMessageDto, mapHostNameCIServerDto.get(sisMessageDto.getHeader().getHostname())))
