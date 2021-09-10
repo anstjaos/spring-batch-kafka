@@ -11,13 +11,13 @@ public class MessageResult {
 
     private MessageResultData data;
 
-    private String fileName;
+    private String filename;
 
     public MessageResult() {}
 
-    public MessageResult(String absolutePath, MessageResultData data, String fileName) {
+    public MessageResult(String absolutePath, MessageResultData data, String filename) {
         this.absolutePath = absolutePath;
         this.data = data;
-        this.fileName = fileName;
+        this.filename = filename;
     }
 }

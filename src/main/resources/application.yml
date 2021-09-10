@@ -27,6 +27,6 @@ spring:
       host: http://10.161.135.48:8983/solr/
 
 kafka:
-  bootstrap-servers: 10.161.135.47:9093,10.161.135.48:9093,10.161.135.49:9093
+  bootstrap-servers: 10.162.0.109:9092,10.162.0.117:9092,10.162.0.110:9092
   group-id: library_test
   max-fetch-size: 3145728

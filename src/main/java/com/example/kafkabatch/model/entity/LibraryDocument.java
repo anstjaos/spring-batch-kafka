@@ -56,7 +56,7 @@ public class LibraryDocument {
     @Field("result.filename")
     private String filename;
 
-    @Field("result.data.version")
+    @Field("result.data.version_s")
     private String version;
 
     public LibraryDocument() {}

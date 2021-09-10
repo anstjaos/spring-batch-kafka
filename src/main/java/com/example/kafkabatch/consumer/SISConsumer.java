@@ -43,12 +43,12 @@ public class SISConsumer {
                 .filter(libraryDocument -> libraryDocument.getFilename() != null)
                 .collect(Collectors.toList());
 
-        log.debug("[PROCESS CHECKER] number of documents: " + libraryDocumentList.size());
+        log.info("[PROCESS CHECKER] number of documents: " + libraryDocumentList.size());
 
         if (libraryDocumentList.size() != 0) {
             libraryDocumentRepository.saveAll(libraryDocumentList);
         } else {
-            log.debug("RDD is Empty!");
+            log.info("RDD is Empty!");
         }
     }
 }
